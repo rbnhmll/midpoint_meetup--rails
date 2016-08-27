@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Midpoint Meetup</title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+  
+  <meta property="og:type" content="website" />
+	<meta property="og:title" content="Midpoint Meetup" />
+	<meta property="og:description" content="Find a mutual meet-up spot for you and your friend, halfway between your two locations using Midpoint Meetup!" />
+	<meta property="og:url" content="http://www.midpointmeetup.com" />
+	<meta property="og:image" content="http://www.midpointmeetup.com/imgages/og.jpg" />
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:creator" content="@rbnhmll">
+	<meta name="twitter:title" content="Midpoint Meetup">
+	<meta name="twitter:description" content="Find a mutual meet-up spot for you and your friend, halfway between your two locations using Midpoint Meetup!">
+	<meta name="twitter:image:src" content="http://www.midpointmeetup.com/imgages/og.jpg">
+</head>
+<body>
+
+<%= yield %>
+
+</body>
+</html>
