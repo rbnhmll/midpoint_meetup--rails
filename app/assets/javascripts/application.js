@@ -13,7 +13,5 @@
 //= require jquery
 //= require jquery_ujs
 //= require turbolinks
-//= require leafletembed
 //= require turf.min
-
-//= require_tree .
+//= require scripts

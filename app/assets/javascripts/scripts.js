@@ -247,5 +247,4 @@ app.init = function() {
 
 $(function(){
 	app.init();
-	console.log("We ready to rock!")
 });
