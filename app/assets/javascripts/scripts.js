@@ -7,7 +7,7 @@ map.scrollWheelZoom.disable();
 
 // Some Mapbox specifics for on load [suplied by mapbox]
 L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-    attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+    attribution: 'Map data &copy; <a href="https://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
     maxZoom: 18,
     id: 'rbnhmll.n1oca4ci',
     accessToken: "pk.eyJ1IjoicmJuaG1sbCIsImEiOiI3NjY4ZDk5NjFhMTYyMDMxMWFmMmM5YWEzMzlkMDgwZiJ9.Ep7u1zX_6SFI94jPki9O-w"
@@ -79,7 +79,7 @@ app.getGeocode = function() {
 
 	var call1 = $.ajax({
 
-		url: "http://api.mapbox.com/v4/geocode/mapbox.places/" + app.userEntry1 + ".json?" + app.mapBoxKey,
+		url: "https://api.mapbox.com/v4/geocode/mapbox.places/" + app.userEntry1 + ".json?" + app.mapBoxKey,
 		type: "GET",
 		dataType: "json",
 		data: {
@@ -91,7 +91,7 @@ app.getGeocode = function() {
 		
 	var call2 = $.ajax({
 
-		url: "http://api.mapbox.com/v4/geocode/mapbox.places/" + app.userEntry2 + ".json?" + app.mapBoxKey,
+		url: "https://api.mapbox.com/v4/geocode/mapbox.places/" + app.userEntry2 + ".json?" + app.mapBoxKey,
 		type: "GET",
 		dataType: "json",
 		data: {
