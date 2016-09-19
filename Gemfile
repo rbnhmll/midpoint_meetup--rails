@@ -20,6 +20,7 @@ group :development, :test do
 end
 
 group :production do
+	gem 'google-analytics-rails', '~> 1.1'
   gem 'pg', '~> 0.18.4'
   gem 'rails_12factor'
 end
