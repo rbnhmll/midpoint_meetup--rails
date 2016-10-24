@@ -1,44 +1,43 @@
-<div class="wrapper">
-	<h1 class="animated bounceInDown">Let's Meet <span>Half</span>way!</h1>
-	<form action="" method="post" data-ajax=”false” class="submitForm">
-		<div class="inputContainer">
-			
-			<div class="input input1">
-				<label for="yourLocation" class="locationLabel">Your Location</label>
-				<input type="text" name="yourLocation" class="yourLocation userInputField" placeholder="Your address (e.g. 100 Queen Street West, Toronto)">
-			</div> <!-- /.input1 -->
-			
-			<div class="input input2">
-				<label for="friendLocation" class="locationLabel">Friend's location</label>
-				<input type="text" name="firendLocation" class="friendLocation userInputField" placeholder="Friend's address (e.g. 1 Yonge Street, Toronto)">
-			</div> <!-- /.input2 -->
-			
-		</div> <!-- /.inputContainer -->
+<h1 class="animated bounceInDown">Let's Meet <span>Half</span>way!</h1>
+<form action="" method="post" data-ajax=”false” class="submitForm">
+	<div class="inputContainer">
 		
-		<div class="button-container  animated fadeIn">
-			<div class="chooserContainer">
-				<input id="coffeeRadio" type="radio" name="venueType" value="coffee">
-				<label for="coffeeRadio">Coffee</label>
-				<input id="beerRadio" type="radio" name="venueType" value="beer">
-				<label for="beerRadio">Beer</label>
-			</div>
-			
-			<input type="submit" value="Meet up!" name="meetUp" data-ajax="false" class="submitBtn">
-		</div> <!-- /.button-container -->
+		<div class="input input1">
+			<label for="yourLocation" class="locationLabel">Your Location</label>
+			<input type="text" name="yourLocation" class="yourLocation userInputField" placeholder="Your address (e.g. 100 Queen Street West, Toronto)">
+		</div> <!-- /.input1 -->
+		
+		<div class="input input2">
+			<label for="friendLocation" class="locationLabel">Friend's location</label>
+			<input type="text" name="firendLocation" class="friendLocation userInputField" placeholder="Friend's address (e.g. 1 Yonge Street, Toronto)">
+		</div> <!-- /.input2 -->
+		
+	</div> <!-- /.inputContainer -->
+	
+	<div class="button-container  animated fadeIn">
+		<div class="chooserContainer">
+			<input id="coffeeRadio" type="radio" name="venueType" value="coffee">
+			<label for="coffeeRadio">Coffee</label>
+			<input id="beerRadio" type="radio" name="venueType" value="beer">
+			<label for="beerRadio">Beer</label>
+		</div>
+		
+		<input type="submit" value="Meet up!" name="meetUp" data-ajax="false" class="submitBtn">
+	</div> <!-- /.button-container -->
 
-	</form>
+</form>
 
-	<!-- Map Container -->
-	<div id='map'></div>
+<!-- Map Container -->
+<div id='map'></div>
 
-	<div class="resultsContainer hide"></div>
+<div class="resultsContainer hide"></div>
 
-	<div class="social-box">
-		<!-- <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://midpointmeetup.com" data-text="Find a mutual meet-up spot for you &amp; a friend using Midpoint Meetup! //" data-via="rbnhmll" data-count="none">Tweet</a> -->
-		<a href="https://twitter.com/intent/tweet?original_referer=http%3A%2F%2Flocalhost%3A8000%2F&amp;ref_src=twsrc%5Etfw&amp;text=Find%20a%20mutual%20meet-up%20spot%20for%20you%20%26%20a%20friend%20using%20Midpoint%20Meetup!%20%2F%2F&amp;tw_p=tweetbutton&amp;url=http%3A%2F%2Fmidpointmeetup.com&amp;via=rbnhmll" class="twitter-btn" id="b"><i class="fa fa-twitter"></i><span class="label" id="l">Tweet</span></a>
-		<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
-	</div> <!-- /.social-box -->
-</div> <!-- /.wrapper -->
+<div class="social-box">
+	<!-- <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://midpointmeetup.com" data-text="Find a mutual meet-up spot for you &amp; a friend using Midpoint Meetup! //" data-via="rbnhmll" data-count="none">Tweet</a> -->
+	<a href="https://twitter.com/intent/tweet?original_referer=http%3A%2F%2Flocalhost%3A8000%2F&amp;ref_src=twsrc%5Etfw&amp;text=Find%20a%20mutual%20meet-up%20spot%20for%20you%20%26%20a%20friend%20using%20Midpoint%20Meetup!%20%2F%2F&amp;tw_p=tweetbutton&amp;url=http%3A%2F%2Fmidpointmeetup.com&amp;via=rbnhmll" class="twitter-btn" id="b"><i class="fa fa-twitter"></i><span class="label" id="l">Tweet</span></a>
+	<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+</div> <!-- /.social-box -->
+
 
 <div class="show-button"><span>?</span></div>
 
@@ -53,9 +52,3 @@
 		<h5>Created by <%= link_to "Robin Hamill", "http://robinhamill.ca" %> using the Mapbox &amp; Foursquare APIs</h5>
 	</div> <!-- /.modal -->
 </div> <!-- /.modal-container -->
-
-
-
-<!-- <script src="http://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script> --> <!-- Leaflet.js CDN -->
-<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script> --> <!-- jQuery CDN -->
-<!-- <script src="scripts.js"></script> -->	<!-- Main scripts -->

@@ -23,8 +23,11 @@
 	<meta name="twitter:image:src" content="http://www.midpointmeetup.com/imgages/og.jpg">
 </head>
 <body>
-
-<%= yield %>
+<div class="wrapper">
+  <p class="notice"><%= notice %></p>
+  <p class="alert"><%= alert %></p>
+  <%= yield %>
+</div>
 
 <%= javascript_include_tag "https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js" %> <!-- Leaflet.js CDN -->
 <%= javascript_include_tag "scripts" %>
