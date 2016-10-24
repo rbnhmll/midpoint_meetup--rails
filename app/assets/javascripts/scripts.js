@@ -179,7 +179,7 @@ app.getVenues = function(centerPtResult) {
 			openNow: 1,
 			venuePhotos: 1,
 			query: querySelect,
-			limit: 3,
+			limit: 6,
 			sortByDistance: 1,
 			format: "json"
 		},
