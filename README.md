@@ -6,9 +6,14 @@ Simply enter the addresses of you and your friend, choose if you want to meet up
 
 Through the wonders of the internet, a midpoint will be calculated, and local results will appear.
 
-## Coming features:
+## Coming/potential features:
 	* Add user signup
 	* Allow user to save favorite locations
+		* Show fav locations first
+		* Allow user to ignore locations
 	* Save friends
 	* Add Geo-location
 	* Map loading animation
+	* Fix smooth scroll
+	* Fuzzy Search for addresses
+	* Redesign
