@@ -1,0 +1,392 @@
+$sans: 'Open Sans', sans-serif
+$serif: 'Roboto Slab', serif
+
+$lightblue: #006FFF
+$darkblue: #2B4862
+$orange: #F1B04D
+
+=button
+	font-family: $sans
+	text-transform: uppercase
+	color: #fff
+	background: $orange
+	padding: 20px
+	border: none
+	border-radius: 0
+	box-shadow: 4px 4px 0 transparentize($darkblue, 0.1)
+	text-shadow: 1px 1px 0 $darkblue
+	border: 1px solid transparent
+	transition: all 0.3s ease
+	font-weight: 700
+	letter-spacing: 4px
+	cursor: pointer
+
+=buttonHover
+	background: darken($orange, 10)
+	color: darken(#fff, 5)
+	border: 1px solid $darkblue
+
+=buttonActive
+	background: darken($orange, 10)
+	color: darken(#fff, 5)
+	border: 1px solid $darkblue
+	box-shadow: 1px 1px 0 $darkblue
+
+=socialButton
+	color: #fff
+	background: $darkblue
+	font-family: $sans
+	text-align: center
+	font-size: .7rem
+	letter-spacing: 1px
+	font-weight: 300
+	text-transform: capitalize
+	text-decoration: none
+	border: none
+	border-radius: 5px
+	cursor: pointer
+	padding: 3px 4px
+	transition: all 0.3s ease
+
+html
+	font-size: 16px
+	font-family: $serif
+	color: $darkblue
+	min-height: 100%
+
+
+body
+	text-align: center
+	background: linear-gradient(rgba($lightblue, 0.3), rgba($lightblue, 0.3)), url(asset_path('patterns/shattered.png'))
+
+
+.wrapper
+	max-width: 1000px
+	margin: 50px auto
+	background-image: linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.9)), url(asset_path("concrete_seamless.png"))
+	padding: 25px
+	box-shadow: 10px 10px 0 transparentize($darkblue, 0.1)
+
+
+h1,
+h2,
+h3,
+h4
+	font-family: $sans
+
+
+h1
+	text-transform: uppercase
+	font-weight: 800
+	font-size: 4.7rem
+	letter-spacing: 3px
+	text-shadow: 3px 3px 0 rgba(255, 255, 255, 0.8), 8px 8px 0 transparentize($darkblue, 0.4)
+	span
+		color: $orange
+	
+
+
+#map
+	width: 90%
+	position:relative
+	top: 0
+	bottom: 0
+	height: 350px
+	margin: 0 auto 50px auto
+	border: 2px solid $darkblue
+
+
+.locationLabel
+	font-family: $sans
+	font-size: 1.2rem
+
+
+.submitForm
+	display: flex
+	flex-direction: column
+	align-items: center
+	.inputContainer
+		width: 75%
+		.userInputField
+			width: 100%
+			padding: 20px
+			margin-top: 5px
+			border: 2px solid lighten($darkblue, 10)
+			border-radius: 0
+			transition: all 0.5s ease
+			&:hover,
+			&:focus
+				box-shadow: 4px 4px 0 transparentize($darkblue, 0.1)
+			
+		
+	
+
+
+label
+	text-transform: uppercase
+
+
+.input
+	margin-bottom: 20px
+	input:-webkit-autofill
+	-webkit-box-shadow: 0 0 0px 1000px lighten($darkblue, 65) inset
+
+.submitBtn
+	width: 100%
+	font-size: 1.5rem
+	+button
+	&:hover
+		+buttonHover
+	&:active
+		+buttonActive
+
+.button-container
+	width: 50%
+	margin: 50px 0
+	.chooserContainer
+		display: flex
+		flex-direction: row
+		width: 100%
+		padding: 0
+		justify-content: space-between
+		margin-bottom: 20px
+		label
+			width: 47.5%
+			+button
+			&:hover
+				+buttonHover
+			&:active
+				+buttonActive
+
+.chooserContainer #coffeeRadio:checked ~ label[for=coffeeRadio],
+.chooserContainer #beerRadio:checked ~ label[for=beerRadio]
+	+buttonActive
+
+
+input[type=radio]
+	margin: 0 10px
+	display: none
+
+
+.resultsContainer
+	width: 90%
+	margin: 0 auto
+	background: linear-gradient(rgba(#fff, 0.5), rgba(#fff, 0.5)), url(asset_path('patterns/hexellence.png'))
+	display: flex
+	flex-direction: row
+	flex-wrap: wrap
+	justify-content: space-between
+	border: 2px solid $darkblue
+	margin-top: 50px
+	padding: 20px
+	img
+		box-shadow: 4px 4px 0 transparentize($darkblue, 0.1)
+	
+
+.venueContainer
+	width: 30%
+	margin-bottom: 25px
+	p
+		margin: 0
+		font-weight: 300
+		line-height: 1.7
+	
+	a
+		display: inline-block
+		text-decoration: none
+		margin-top: 20px
+		color: $darkblue
+		transition: all 0.3s ease
+		&:hover
+			color: $orange
+		
+	
+	span
+		color: $orange
+	
+
+
+.resultsContainer img
+	max-width: 100%
+
+
+.hide
+	display: none
+	transition: all 0.5s ease
+
+
+.social-box
+	margin: 25px 0
+	.twitter-btn
+		+button
+		font-size: 0.8rem
+		text-decoration: none
+		color: #fff
+		background: $orange
+		padding: 5px 10px
+		&:hover
+			+buttonHover
+		&:active
+			+buttonActive
+
+
+// MODAL STYLES//
+
+.modal-container
+	position: fixed
+	width: 100%
+	height: 100%
+	top: 0
+	left: 0
+	z-index: 99999999
+	display: flex
+	transform: scale(1.3)
+	opacity: 0
+	visibility: hidden
+	transition: all 0.5s ease
+
+
+.modal-container.show
+	opacity: 1
+	visibility: visible
+	transform: scale(1)
+
+
+.overlay
+	background: rgba(0, 0, 0, 0.4)
+	position: absolute
+	width: 100%
+	height: 100%
+	top: 0
+	left: 0
+	z-index: 10
+
+
+.modal
+	max-width: 500px
+	background: transparentize(#fff, 0.1)
+	padding: 20px
+	margin: auto
+	position: relative
+	z-index: 10
+	box-shadow: 5px 10px 0 transparentize($darkblue, 0.4)
+	h5 
+		margin: 10px 0 0px 0
+	a 
+		color: $darkblue
+
+.close-button
+	position: absolute
+	right: -15px
+	top: -15px
+	display: flex
+	width: 30px
+	height: 30px
+	// border-radius: 50%
+	background: transparentize($orange, .1)
+	box-shadow: 2px 3px 0 transparentize($darkblue, 0.4)
+
+
+.close-button i
+	margin: auto
+	color: #fff
+	cursor: pointer
+ 
+.show-button
+	cursor: pointer
+	position: fixed
+	bottom: 0
+	right: 0
+	width: 0px
+	height: 0px
+	border-left: 25px solid transparent
+	border-right: 25px solid $darkblue
+	border-bottom: 25px solid $darkblue
+	border-top: 25px solid transparent
+	span
+		position: relative
+		color: #fff
+		bottom: 0
+		right: -7px
+
+
+/*MEDIA QUERIES*/
+
+@media all and (max-width: 1020px)
+	.wrapper
+		margin: 50px 20px
+	
+
+
+@media all and (max-width: 800px)
+	.wrapper
+		margin: 25px 20px
+	
+	.button-container
+		width: 75%
+	
+	.inputContainer
+		width: 75%
+		.input
+			width: 100%
+		
+	
+
+
+@media all and (max-width: 700px)
+	.resultsContainer
+		padding: 15px 10px
+	
+	.venueContainer
+		width: 100%
+		margin-bottom: 35px
+	
+	.submitForm
+		.inputContainer
+			width: 90%
+		
+	
+	.button-container
+		width: 90%
+	
+
+
+@media all and (max-width: 525px)
+	h1
+		font-size: 4rem
+	
+	.modal
+		margin: auto 5%
+	
+
+
+@media all and (max-width: 485px)
+	.wrapper
+		margin: 15px
+	
+	h1
+		font-size: 3.5rem
+	
+	.submitForm
+		.inputContainer
+			width: 100%
+		
+	
+	.button-container
+		width: 100%
+	
+	#map
+		width: 100%
+		height: 350px
+	
+	.resultsContainer
+		width: 100%
+	
+
+
+@media all and (max-width: 405px)
+	h1
+		font-size: 2.5rem
+		text-shadow: 2px 2px 0 rgba(255, 255, 255, 0.8), 5px 5px 0 transparentize($darkblue, 0.4)
+	
+
