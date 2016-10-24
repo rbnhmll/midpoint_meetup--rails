@@ -9,8 +9,8 @@ Through the wonders of the internet, a midpoint will be calculated, and local re
 ## Coming/potential features:
 	* Add user signup
 	* Allow user to save favorite locations
-		* Show fav locations first
-		* Allow user to ignore locations
+		- Show fav locations first
+		- Allow user to ignore locations
 	* Save friends
 	* Add Geo-location
 	* Map loading animation
