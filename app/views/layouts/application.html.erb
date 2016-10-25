@@ -27,7 +27,7 @@
   <div class="wrapper">
     <header>
       <nav class="nav">
-        <ul>
+        <ul class="clearfix">
           <% if user_signed_in? %>
             <li class="nav__item">
             <%= link_to('Logout', destroy_user_session_path, :method => :delete) %>        
@@ -43,7 +43,9 @@
     <h1 class="animated bounceInDown">Let's Meet <span>Half</span>way!</h1>
     <p class="notice"><%= notice %></p>
     <p class="alert"><%= alert %></p>
+    
     <%= yield %>
+
   </div>
 
   <%= javascript_include_tag "https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js" %> <!-- Leaflet.js CDN -->
