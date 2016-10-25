@@ -199,26 +199,43 @@ app.displayVenues = function(localVenues) {
 		  var zilch = $('<h4>').text("Uh oh.  Looks like your query hasn't returned any results.  Your halfway point is probably in the middle of nowhere :(");
 	    $('.resultsContainer').append(zilch);
 	  };
-	for (var i=0; i<localVenues.length; i++) {
-		var venueName = localVenues[i].venue.name;
-		var venueAddress = localVenues[i].venue.location.formattedAddress[0];
-		var venueDistance = localVenues[i].venue.location.distance;
-		var venueCity = localVenues[i].venue.location.formattedAddress[1];
-		var venueImage = localVenues[i].venue.featuredPhotos.items[0].prefix + "300x300" + localVenues[i].venue.photos.groups[0].items[0].suffix;
-		var venueId = localVenues[i].venue.id;
+
+  // Grab results container, and template from HTML
+	var resultsContainer = $('.resultsContainer');
+	var venueTemplate = $('#venue-template').html();
+	
+  // Setup forEach to loop over each of the results, and 
+	localVenues.forEach(function(venueItem) {
+		// Shorten object call
+		var v = venueItem.venue;
+
+		// Set variables for each piece of object info
+		var venueName = v.name;
+		var venueAddress = v.location.formattedAddress[0];
+		var venueDistance = v.location.distance;
+		var venueCity = v.location.formattedAddress[1];
+		var venueImage = v.featuredPhotos.items[0].prefix + "300x300" + v.photos.groups[0].items[0].suffix;
+		var venueId = v.id;
 		var venueUrlPrefix = "https://foursquare.com/v/";
-		var $venueContainer = $("<div>");
-		$venueContainer.addClass("venueContainer");
-		var $venueImage = $("<img>");
-		$venueImage.attr("src", venueImage);
 
+		// Set template as variable so we can append it easier later.
+		var templateItem = $(venueTemplate);
 
-		$(".resultsContainer").append($venueContainer.append("<img src=" + venueImage +  ">" + "<h2>" + venueName + "</h2>" + "<p>" + venueAddress + "," + "</p>" + "<p>" + venueCity + "</p>" + "<p>" + "<span>" + venueDistance + "m" + "</span>" + " from midpoint." + "</p>" + "<a href='" + venueUrlPrefix + venueId + "' target='_blank'>" + "<i class='fa fa-foursquare'></i>" + " Visit On Foursquare" + "</a>" ).fadeIn(1500));
+		// Find elements within template, and place in data.
+		templateItem.find('.venue__image').attr('src', venueImage);
+		templateItem.find('.venue__name').text(venueName);
+		templateItem.find('.venue__addr').text(venueAddress);
+		templateItem.find('.venue__city').text(venueCity);
+		templateItem.find('.venue__dist span').text(venueDistance);
+		templateItem.find('.venue__link').attr("href", venueUrlPrefix + venueId);
 
-		L.marker([localVenues[i].venue.location.lat,localVenues[i].venue.location.lng]).addTo(map).bindPopup(venueName + ":" + "<br>" + venueAddress);
-		// console.log(app.centerPtResult);
-		map.setView([localVenues[0].venue.location.lat,localVenues[i].venue.location.lng], 15);
-	};
+		resultsContainer.append(templateItem);
+
+		L.marker([venueItem.venue.location.lat,venueItem.venue.location.lng]).addTo(map).bindPopup(venueName + ":" + "<br>" + venueAddress);
+
+		map.setView([localVenues[0].venue.location.lat,venueItem.venue.location.lng], 15);
+		});
+
 };
 
 
@@ -247,4 +264,4 @@ app.init = function() {
 
 $(function(){
 	app.init();
-})();
+});
