@@ -226,13 +226,13 @@ app.displayVenues = function(localVenues) {
 
 
 app.showModal = function() {
-// 1.When we click on the show button we want to show the modal box.
+// Show modal on click.
 	$(".show-button").on("click", function() {
 		$(".modal-container").addClass("show");
 	});
 };
 
-// 2. When we click on the X close button, hide the modal box.
+// Hide modal on click
 app.closeModal = function() {
 	$(".close-button").on("click", function(){
 		$(".modal-container").removeClass("show");
@@ -247,4 +247,4 @@ app.init = function() {
 
 $(function(){
 	app.init();
-});
+})();
