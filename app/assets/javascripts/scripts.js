@@ -226,7 +226,7 @@ app.displayVenues = function(localVenues) {
 		templateItem.find('.venue__name').text(venueName);
 		templateItem.find('.venue__addr').text(venueAddress);
 		templateItem.find('.venue__city').text(venueCity);
-		templateItem.find('.venue__dist span').text(venueDistance);
+		templateItem.find('.venue__dist span').text(venueDistance + "m");
 		templateItem.find('.venue__link').attr("href", venueUrlPrefix + venueId);
 
 		resultsContainer.append(templateItem);
