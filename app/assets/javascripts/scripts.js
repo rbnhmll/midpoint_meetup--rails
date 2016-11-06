@@ -256,10 +256,19 @@ app.closeModal = function() {
 	});
 };
 
+app.escapeModal = function(){
+	$(document).keyup(function(ev){
+	  if(ev.keyCode == 27) {
+	    $(".close-button").trigger("click");
+	  };
+	});
+};
+
 app.init = function() {
 	app.getUserInputs();
 	this.showModal();
 	this.closeModal();
+	this.escapeModal();
 };
 
 $(function(){
