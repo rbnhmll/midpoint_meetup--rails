@@ -109,7 +109,6 @@ app.getGeocode = function() {
 		app.getMidpoint(coords1,coords2);
 	})
 
-
 };
 
 //Combine the two coordinate arrays into one midpoint array using turf.center.
@@ -136,7 +135,6 @@ app.getMidpoint = function(coords1,coords2) {
 	  ]
 	};
 
-
 	var centerPt = turf.center(features);
 	var centerPtResult = centerPt.geometry.coordinates;
 	
@@ -144,6 +142,7 @@ app.getMidpoint = function(coords1,coords2) {
 	app.centerPtResult = centerPtResult;
 
 	app.getVenues(centerPtResult);
+
 };
 
 
@@ -190,10 +189,12 @@ app.getVenues = function(centerPtResult) {
 		console.log(venueResult);
 		app.displayVenues(venueResult);
 	});
+
 };
 
 //3. build our html to display on the page.
 app.displayVenues = function(localVenues) {
+
 	$(".resultsContainer").empty();
 	if (localVenues.length === 0) {
 		  var zilch = $('<h4>').text("Uh oh.  Looks like your query hasn't returned any results.  Your halfway point is probably in the middle of nowhere :(");
@@ -242,8 +243,8 @@ app.displayVenues = function(localVenues) {
 
 
 
-app.showModal = function() {
 // Show modal on click.
+app.showModal = function() {
 	$(".show-button").on("click", function() {
 		$(".modal-container").addClass("show");
 	});
@@ -256,6 +257,7 @@ app.closeModal = function() {
 	});
 };
 
+// Hide modal on Esc
 app.escapeModal = function(){
 	$(document).keyup(function(ev){
 	  if(ev.keyCode == 27) {
