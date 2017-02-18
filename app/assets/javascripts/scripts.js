@@ -1,3 +1,10 @@
+var mm = new Vue({
+	el: '#app',
+	data: {
+		
+	}
+});
+
 // Initialize mapbox
 var map = L.map('map').setView([43.65323,-79.38318
 ], 12);
