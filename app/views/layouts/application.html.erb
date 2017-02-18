@@ -8,7 +8,6 @@
   <%= stylesheet_link_tag("https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css") %> <!-- Leaflet.css -->
   <%= stylesheet_link_tag("https://api.tiles.mapbox.com/mapbox.js/v2.2.1/mapbox.css") %> <!-- Mapbox.css -->
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
   <%= analytics_init if GoogleAnalytics.valid_tracker? %>
   
@@ -48,7 +47,7 @@
     <%= yield %>
 
   </div>
-
+  <%= javascript_include_tag 'application' %>
   <%= javascript_include_tag "https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js" %> <!-- Leaflet.js CDN -->
   <%= javascript_include_tag "scripts" %>
 </body>
