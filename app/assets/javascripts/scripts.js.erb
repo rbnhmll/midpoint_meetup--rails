@@ -7,17 +7,29 @@ map.scrollWheelZoom.disable();
 
 // Some Mapbox specifics for on load [suplied by mapbox]
 L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-    attribution: 'Map data &copy; <a href="https://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecothisons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
     maxZoom: 18,
     id: 'rbnhmll.n1oca4ci',
     accessToken: "<%= ENV['MAPBOX_KEY'] %>"
 }).addTo(map);
 
+Vue.component('results', {
+  template: `
+  	<div class="venueContainer">
+			<img class="venue__image" src="{{ result.venue__image }}">
+			<h2 class="venue__name">{{ result.venue__name }}</h2>
+			<p class="venue__addr">{{ result.venue__addr }}</p>
+			<p class="venue__city">{{ result.venue__city }}</p>
+			<p class="venue__dist"><span>{{ result.venue__dist }}</span> from midpoint.</p>
+			<a class="venue__link" href="{{ result.venue__link }}" target="_blank"><i class="fa fa-foursquare"></i> Visit On Foursquare</a>
+		</div>
+	`
+})
+
 var mm = new Vue({
 	el: '#app',
 	data: {
 		clientId: "<%= ENV['CLIENT_ID'] %>",
-		clientSecret: "<%= ENV['CLIENT_SECTRET'] %>",
+		clientSecret: "<%= ENV['CLIENT_SECRET'] %>",
 		mapBoxKey: "<%= ENV['MAPBOX_KEY'] %>",
 		showModal: false,
 		yourLocation: "",
@@ -27,16 +39,16 @@ var mm = new Vue({
 	methods: {
 		//move user inputs into variables//
 		getUserInputs: function() {
-			if ($(".yourLocation").val() == "" && $(".friendLocation").val() == "") {
+			if (this.yourLocation == "" && this.friendLocation == "") {
 				alert("Please fill in the two location fields!");
 			}
-			else if ($(".yourLocation").val() == "") {
+			else if (this.yourLocation == "") {
 				alert("Please fill in your location!");
 			}
-			else if ($(".friendLocation").val() == "") {
+			else if (this.friendLocation == "") {
 				alert("Please fill in your friend's location!");
 			}
-			else if ( !($("input[type=radio]").is(':checked')) ) {
+			else if ( this.venueType == ""  ) {
 				alert("Please choose either Coffee or Beer!");
 			}
 			else {
@@ -44,18 +56,18 @@ var mm = new Vue({
 		        scrollTop: $("#map").offset().top
 		    }, 800);
 				$(".resultsContainer").removeClass("hide").addClass("animated bounceInUp");
-				this.convertToGeo(yourLocation,friendLocation);
-			};
+				this.convertToGeo(this.yourLocation,this.friendLocation);
+			}
 		},
 		// Convert user-entered data to properly formatted object using Split//
 		convertToGeo: function(yourLocation,friendLocation) {
 			var userEntry1 = this.yourLocation.split(" ");
 			var userEntry2 = this.friendLocation.split(" ");
-			getGeocode(userEntry1, userEntry2);
+			this.getGeocode(userEntry1, userEntry2);
 		},
-		getGeocode: function() {
+		getGeocode: function(userEntry1, userEntry2) {
 			var call1 = $.ajax({
-				url: "https://api.mapbox.com/v4/geocode/mapbox.places/" + this.userEntry1 + ".json?" + this.mapBoxKey,
+				url: "https://api.mapbox.com/v4/geocode/mapbox.places/" + userEntry1 + ".json?" + this.mapBoxKey,
 				type: "GET",
 				dataType: "json",
 				data: {
@@ -65,7 +77,7 @@ var mm = new Vue({
 			});
 
 			var call2 = $.ajax({
-				url: "https://api.mapbox.com/v4/geocode/mapbox.places/" + this.userEntry2 + ".json?" + this.mapBoxKey,
+				url: "https://api.mapbox.com/v4/geocode/mapbox.places/" + userEntry2 + ".json?" + this.mapBoxKey,
 				type: "GET",
 				dataType: "json",
 				data: {
