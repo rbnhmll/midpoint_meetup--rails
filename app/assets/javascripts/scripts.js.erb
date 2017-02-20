@@ -1,5 +1,5 @@
 // Components
-Vue.component('results', {
+Vue.component('results_card', {
   template: `
   	<div class="venueContainer">
 			<img class="venue__image" src="{{ result.venue__image }}">
@@ -10,13 +10,14 @@ Vue.component('results', {
 			<a class="venue__link" href="{{ result.venue__link }}" target="_blank"><i class="fa fa-foursquare"></i> Visit On Foursquare</a>
 		</div>
 	`
-})
+});
 
 var mm = new Vue({
 	el: '#app',
 	data: {
 		clientId: "<%= ENV['CLIENT_ID'] %>",
-		clientSecret: "<%= ENV['CLIENT_SECRET'] %>",
+		// clientSecret: "<%= ENV['CLIENT_SECRET'] %>",
+		clientSecret: "YRFJZOCG0J3RAJCLGTTAPORHLNBHRNO0X0DSBTBRNA21HMFS",
 		mapBoxKey: "<%= ENV['MAPBOX_KEY'] %>",
 		
 		showModal: false,
@@ -167,8 +168,8 @@ var mm = new Vue({
 			  };
 
 		  // Grab results container, and template from HTML
-			var resultsContainer = $('.resultsContainer');
-			var venueTemplate = $('#venue-template').html();
+			// var resultsContainer = $('.resultsContainer');
+			// var venueTemplate = $('#venue-template').html();
 			
 		  // Setup forEach to loop over each of the results, and 
 			localVenues.forEach(function(venueItem) {
@@ -185,17 +186,17 @@ var mm = new Vue({
 				var venueUrlPrefix = "https://foursquare.com/v/";
 
 				// Set template as variable so we can append it easier later.
-				var templateItem = $(venueTemplate);
+				// var templateItem = $(venueTemplate);
 
 				// Find elements within template, and place in data.
-				templateItem.find('.venue__image').attr('src', venueImage);
-				templateItem.find('.venue__name').text(venueName);
-				templateItem.find('.venue__addr').text(venueAddress);
-				templateItem.find('.venue__city').text(venueCity);
-				templateItem.find('.venue__dist span').text(venueDistance + "m");
-				templateItem.find('.venue__link').attr("href", venueUrlPrefix + venueId);
+				// templateItem.find('.venue__image').attr('src', venueImage);
+				// templateItem.find('.venue__name').text(venueName);
+				// templateItem.find('.venue__addr').text(venueAddress);
+				// templateItem.find('.venue__city').text(venueCity);
+				// templateItem.find('.venue__dist span').text(venueDistance + "m");
+				// templateItem.find('.venue__link').attr("href", venueUrlPrefix + venueId);
 
-				resultsContainer.append(templateItem);
+				// resultsContainer.append(templateItem);
 
 				L.marker([venueItem.venue.location.lat,venueItem.venue.location.lng]).addTo(map).bindPopup(venueName + ":" + "<br>" + venueAddress);
 
