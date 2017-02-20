@@ -12,5 +12,7 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require vue
+//= require leafletembed
 //= require turf.min
+//= require vue
+//= require scripts
