@@ -1,17 +1,4 @@
-// Initialize mapbox
-var map = L.map('map').setView([43.65323,-79.38318
-], 12);
-
-// Disable scrolling when hovering on map
-map.scrollWheelZoom.disable();
-
-// Some Mapbox specifics for on load [suplied by mapbox]
-L.tileLayer('https://api.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-    maxZoom: 18,
-    id: 'rbnhmll.n1oca4ci',
-    accessToken: "<%= ENV['MAPBOX_KEY'] %>"
-}).addTo(map);
-
+// Components
 Vue.component('results', {
   template: `
   	<div class="venueContainer">
@@ -31,9 +18,10 @@ var mm = new Vue({
 		clientId: "<%= ENV['CLIENT_ID'] %>",
 		clientSecret: "<%= ENV['CLIENT_SECRET'] %>",
 		mapBoxKey: "<%= ENV['MAPBOX_KEY'] %>",
+		
 		showModal: false,
-		yourLocation: "",
-		friendLocation: "",
+		yourLocation: "154 Sorauren ave. toronto",
+		friendLocation: "99 spadina road toronto",
 		venueType: ""
 	},
 	methods: {
@@ -65,7 +53,9 @@ var mm = new Vue({
 			var userEntry2 = this.friendLocation.split(" ");
 			this.getGeocode(userEntry1, userEntry2);
 		},
+
 		getGeocode: function(userEntry1, userEntry2) {
+			var self = this;
 			var call1 = $.ajax({
 				url: "https://api.mapbox.com/v4/geocode/mapbox.places/" + userEntry1 + ".json?" + this.mapBoxKey,
 				type: "GET",
@@ -92,9 +82,8 @@ var mm = new Vue({
 				// reverse the array order.
 				coords1.reverse();
 				coords2.reverse();
-				this.getMidpoint(coords1,coords2);
-			})
-
+				self.getMidpoint(coords1,coords2);
+			});
 		},
 		//Combine the two coordinate arrays into one midpoint array using turf.center.
 		getMidpoint: function(coords1,coords2) {
@@ -124,13 +113,13 @@ var mm = new Vue({
 			
 			centerPtResult = centerPtResult[0] + "," + centerPtResult[1];
 			this.centerPtResult = centerPtResult;
-			getVenues(centerPtResult);
+			this.getVenues(centerPtResult);
 		},
 		// --------------------//
 		//FourSquare API begins//
 		//1. Get a list of venues from 4S.
 		getVenues: function(centerPtResult) {
-
+			var self = this;
 			if (this.venueType === "coffee") {
 				var sectionSelect = "coffee";
 				var querySelect = "coffee";
@@ -164,7 +153,7 @@ var mm = new Vue({
 			$.when(call3).then(function(res3) {
 				var venueResult = res3.response.groups[0].items;
 				console.log(venueResult);
-				this.displayVenues(venueResult);
+				self.displayVenues(venueResult);
 			});
 
 		},
@@ -227,5 +216,18 @@ var mm = new Vue({
         this.closeModal();
       }
     });
+    // Initialize mapbox
+    var map = L.map('map').setView([43.65323,-79.38318
+    ], 12);
+
+    // Disable scrolling when hovering on map
+    map.scrollWheelZoom.disable();
+
+    // Some Mapbox specifics for on load [suplied by mapbox]
+    L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+        maxZoom: 18,
+        id: 'rbnhmll.n1oca4ci',
+        accessToken: "pk.eyJ1IjoicmJuaG1sbCIsImEiOiI3NjY4ZDk5NjFhMTYyMDMxMWFmMmM5YWEzMzlkMDgwZiJ9.Ep7u1zX_6SFI94jPki9O-w"
+    }).addTo(map);
 	} // End Mounted (Vue Ready)
 });
