@@ -6,7 +6,7 @@ var map = L.map('map').setView([43.65323,-79.38318
 map.scrollWheelZoom.disable();
 
 // Some Mapbox specifics for on load [suplied by mapbox]
-L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+L.tileLayer('https://api.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
     maxZoom: 18,
     id: 'rbnhmll.n1oca4ci',
     accessToken: "<%= ENV['MAPBOX_KEY'] %>"
