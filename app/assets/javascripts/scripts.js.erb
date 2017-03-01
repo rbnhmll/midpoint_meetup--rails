@@ -176,13 +176,14 @@ var mm = new Vue({
 		// Hide modal on click
 		closeModal: function() {
 			this.showModal = false;
-		},
+		}
 	}, // End of methods
 	mounted: function(){
 		// Hide modal on Esc
+		var self = this;
 		document.addEventListener("keydown", function(e) {
       if (e.keyCode == 27) {
-        this.closeModal();
+        self.closeModal();
       }
     });
     // Initialize mapbox
