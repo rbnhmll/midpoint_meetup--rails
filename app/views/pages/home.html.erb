@@ -22,7 +22,7 @@
 				<label for="beerRadio">Beer</label>
 			</div>
 			
-			<input type="submit" value="Meet up!" name="meetUp" data-ajax="false" class="submitBtn">
+			<input type="submit" value="Meet up!" name="meetUp" data-ajax="false" class="submitBtn" v-on:submit="showResultsBox">
 		</div> <!-- /.button-container -->
 
 	</form>
@@ -30,9 +30,9 @@
 	<!-- Map Container -->
 	<div id='map'></div>
 
-	<div class="resultsContainer" v-if="results.length">
+	<div class="resultsContainer" v-if="showResults">
 		<venue-container v-for="result in results" :result="result">
-			<h4 v-if="results.length == 0">{{ zilch }}</h4>
+			<h4>{{ zilch }}</h4>
 		</venue-container>
 	</div>
 

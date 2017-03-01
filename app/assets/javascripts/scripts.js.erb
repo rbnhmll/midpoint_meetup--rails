@@ -11,15 +11,18 @@ var mm = new Vue({
 		// clientSecret: "<%= ENV['CLIENT_SECRET'] %>",
 		clientSecret: "YRFJZOCG0J3RAJCLGTTAPORHLNBHRNO0X0DSBTBRNA21HMFS",
 		mapBoxKey: "<%= ENV['MAPBOX_KEY'] %>",
-		
 		showModal: false,
 		yourLocation: "154 Sorauren ave. toronto",
 		friendLocation: "99 spadina road toronto",
 		venueType: "",
+		showResults: false,
 		results: [],
-		zilch: "Uh oh.  Looks like your query hasn't returned any results.  Your halfway point is probably in the middle of nowhere :("
+		zilch: ""
 	},
 	methods: {
+		showResultsBox: function() {
+			this.showResults = true;
+		},
 		//move user inputs into variables//
 		getUserInputs: function() {
 			if (this.yourLocation == "" && this.friendLocation == "") {
@@ -147,7 +150,6 @@ var mm = new Vue({
 
 			$.when(call3).then(function(res3) {
 				var venueResult = res3.response.groups[0].items;
-				console.log(venueResult);
 				mm.results = venueResult;
 				self.displayVenues();
 			});
@@ -155,11 +157,16 @@ var mm = new Vue({
 		},
 		//3. build our html to display on the page.
 		displayVenues: function(localVenues) {
-		  // Setup forEach to loop over each of the results, and 
+			if (this.results.length == 0) {
+				this.zilch = "Uh oh.  Looks like your query hasn't returned any results.  Your halfway point is probably in the middle of nowhere :("
+			} else {
+				this.zilch = "";
+			}
+
 			this.results.forEach(function(result) {
-				// Shorten object call
 				var v = result.venue;
-				L.marker([v.location.lat,v.location.lng]).addTo(map).bindPopup(v.name + ":" + "<br>" + venueAddress);
+				var address = v.location.formattedAddress[0];
+				L.marker([v.location.lat,v.location.lng]).addTo(map).bindPopup(v.name + ":" + "<br>" + address);
 
 				map.setView([localVenues[0].venue.location.lat,venueItem.venue.location.lng], 15);
 			});
