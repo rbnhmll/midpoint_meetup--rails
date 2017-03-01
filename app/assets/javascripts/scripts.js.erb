@@ -12,12 +12,22 @@ var mm = new Vue({
 		clientSecret: "YRFJZOCG0J3RAJCLGTTAPORHLNBHRNO0X0DSBTBRNA21HMFS",
 		mapBoxKey: "<%= ENV['MAPBOX_KEY'] %>",
 		showModal: false,
-		yourLocation: "154 Sorauren ave. toronto",
-		friendLocation: "1 Yonge st. Toronto",
+		yourLocation: "154 Sorauren Ave. Toronto",
+		friendLocation: "1 Yonge Street Toronto",
 		venueType: "",
 		showResults: false,
+		centerPtResult: "",
 		results: [],
-		zilch: "Uh oh.  Looks like your query hasn't returned any results.  Your halfway point is probably in the middle of nowhere :("
+		map: ""
+	},
+	computed: {
+		noResults: function() {
+			if ((this.results.length === 0 ) && (this.showResults)) {
+				return true;
+			} else {
+				return false;
+			}
+		}
 	},
 	methods: {
 		showResultsBox: function() {
@@ -25,6 +35,7 @@ var mm = new Vue({
 		},
 		//move user inputs into variables//
 		getUserInputs: function() {
+			this.showResults = false;
 			if (this.yourLocation == "" && this.friendLocation == "") {
 				alert("Please fill in the two location fields!");
 			}
@@ -57,10 +68,9 @@ var mm = new Vue({
 			function getFirstLocation() {
 				return axios.get("https://api.mapbox.com/v4/geocode/mapbox.places/" + userEntry1 + ".json?access_token=" + mm.mapBoxKey
 				).then(function(response) {
-					console.log(response);
 					return response;
 				}).catch(function(error) {
-					console.log(error);
+					console.error(error);
 					return error;
 				});
 			};
@@ -68,17 +78,15 @@ var mm = new Vue({
 			function getSecondLocation() {
 				return axios.get("https://api.mapbox.com/v4/geocode/mapbox.places/" + userEntry2 + ".json?access_token=" + mm.mapBoxKey
 				).then(function(response) {
-					console.log(response);
 					return response;
 				}).catch(function(error) {
-					console.log(error);
+					console.error(error);
 					return error;
 				});
 			};
-			// This is a promise.
+
 			axios.all([getFirstLocation(), getSecondLocation()])
 				.then(axios.spread(function(res1,res2){
-					console.log("responses",res1,res2)
 					var coords1 = res1.data.features[0].geometry.coordinates;
 					var coords2 = res2.data.features[0].geometry.coordinates;
 					// reverse the array order.
@@ -115,12 +123,12 @@ var mm = new Vue({
 			
 			centerPtResult = centerPtResult[0] + "," + centerPtResult[1];
 			this.centerPtResult = centerPtResult;
-			this.getVenues(centerPtResult);
+			this.getVenues();
 		},
 		// --------------------//
 		//FourSquare API begins//
 		//1. Get a list of venues from 4S.
-		getVenues: function(centerPtResult) {
+		getVenues: function() {
 			var self = this;
 			if (this.venueType === "coffee") {
 				var sectionSelect = "coffee";
@@ -134,7 +142,7 @@ var mm = new Vue({
 		//Foursquare API call
 			axios.get("https://api.foursquare.com/v2/venues/explore", {
 				params: {
-					ll: centerPtResult,
+					ll: this.centerPtResult,
 					client_id: this.clientId,
 					client_secret: this.clientSecret,
 					v: 20150722,
@@ -148,36 +156,28 @@ var mm = new Vue({
 					format: "json"
 				}
 			}).then(function(res3) {
-				console.log("Response 3",res3);
 				var venueResult = res3.data.response.groups[0].items;
 				mm.results = venueResult;
+				self.showResults = true;
 				self.displayVenues();
 			}).catch(function(error) {
 				console.error(error);
 			});
 		},
 		//3. build our html to display on the page.
-		displayVenues: function(localVenues) {
-			if (this.results.length == 0) {
-				this.zilch = "Uh oh.  Looks like your query hasn't returned any results.  Your halfway point is probably in the middle of nowhere :("
-			} else {
-				this.zilch = "";
-			}
-
+		displayVenues: function() {
+			L.Icon.Default.imagePath = "https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/images/"
 			this.results.forEach(function(result) {
 				var v = result.venue;
 				var address = v.location.formattedAddress[0];
-				L.marker([v.location.lat,v.location.lng]).addTo(map).bindPopup(v.name + ":" + "<br>" + address);
-
-				map.setView([localVenues[0].venue.location.lat,venueItem.venue.location.lng], 15);
+				L.marker([v.location.lat, v.location.lng]).addTo(mm.map).bindPopup(v.name + ":" + "<br>" + address);
 			});
-
+			mm.map.setView([this.results[0].venue.location.lat, this.results[0].venue.location.lng], 15);
 		},
 		// Hide modal on click
 		closeModal: function() {
 			this.showModal = false;
 		},
-
 	}, // End of methods
 	mounted: function(){
 		// Hide modal on Esc
@@ -190,6 +190,7 @@ var mm = new Vue({
     var map = L.map('map').setView([43.65323,-79.38318
     ], 12);
 
+
     // Disable scrolling when hovering on map
     map.scrollWheelZoom.disable();
 
@@ -199,5 +200,7 @@ var mm = new Vue({
         id: 'rbnhmll.n1oca4ci',
         accessToken: "pk.eyJ1IjoicmJuaG1sbCIsImEiOiI3NjY4ZDk5NjFhMTYyMDMxMWFmMmM5YWEzMzlkMDgwZiJ9.Ep7u1zX_6SFI94jPki9O-w"
     }).addTo(map);
+    
+    this.map = map;
 	} // End Mounted (Vue Ready)
 });
