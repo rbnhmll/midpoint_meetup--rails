@@ -12,6 +12,7 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require axios
 //= require turf.min
 //= require vue
 //= require leaflet

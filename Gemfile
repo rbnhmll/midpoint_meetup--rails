@@ -1,5 +1,6 @@
 source 'https://rubygems.org'
 
+gem 'axios_rails', '~> 0.7.0'
 gem 'better_errors'
 gem 'coffee-rails', '~> 4.1.0'
 gem 'devise', '~> 3.5', '>= 3.5.6'

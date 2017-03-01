@@ -13,11 +13,11 @@ var mm = new Vue({
 		mapBoxKey: "<%= ENV['MAPBOX_KEY'] %>",
 		showModal: false,
 		yourLocation: "154 Sorauren ave. toronto",
-		friendLocation: "99 spadina road toronto",
+		friendLocation: "1 Yonge st. Toronto",
 		venueType: "",
 		showResults: false,
 		results: [],
-		zilch: ""
+		zilch: "Uh oh.  Looks like your query hasn't returned any results.  Your halfway point is probably in the middle of nowhere :("
 	},
 	methods: {
 		showResultsBox: function() {
@@ -54,34 +54,38 @@ var mm = new Vue({
 
 		getGeocode: function(userEntry1, userEntry2) {
 			var self = this;
-			var call1 = $.ajax({
-				url: "https://api.mapbox.com/v4/geocode/mapbox.places/" + userEntry1 + ".json?" + this.mapBoxKey,
-				type: "GET",
-				dataType: "json",
-				data: {
-					access_token: this.mapBoxKey,
-					format: "json"
-				}
-			});
+			function getFirstLocation() {
+				return axios.get("https://api.mapbox.com/v4/geocode/mapbox.places/" + userEntry1 + ".json?access_token=" + mm.mapBoxKey
+				).then(function(response) {
+					console.log(response);
+					return response;
+				}).catch(function(error) {
+					console.log(error);
+					return error;
+				});
+			};
 
-			var call2 = $.ajax({
-				url: "https://api.mapbox.com/v4/geocode/mapbox.places/" + userEntry2 + ".json?" + this.mapBoxKey,
-				type: "GET",
-				dataType: "json",
-				data: {
-					access_token: this.mapBoxKey,
-					format: "json"
-				}
-			});
+			function getSecondLocation() {
+				return axios.get("https://api.mapbox.com/v4/geocode/mapbox.places/" + userEntry2 + ".json?access_token=" + mm.mapBoxKey
+				).then(function(response) {
+					console.log(response);
+					return response;
+				}).catch(function(error) {
+					console.log(error);
+					return error;
+				});
+			};
 			// This is a promise.
-			$.when(call1,call2).then(function(res1,res2) {
-				var coords1 = res1[0].features[0].geometry.coordinates;
-				var coords2 = res2[0].features[0].geometry.coordinates;
-				// reverse the array order.
-				coords1.reverse();
-				coords2.reverse();
-				self.getMidpoint(coords1,coords2);
-			});
+			axios.all([getFirstLocation(), getSecondLocation()])
+				.then(axios.spread(function(res1,res2){
+					console.log("responses",res1,res2)
+					var coords1 = res1.data.features[0].geometry.coordinates;
+					var coords2 = res2.data.features[0].geometry.coordinates;
+					// reverse the array order.
+					coords1.reverse();
+					coords2.reverse();
+					self.getMidpoint(coords1,coords2);
+			}));
 		},
 		//Combine the two coordinate arrays into one midpoint array using turf.center.
 		getMidpoint: function(coords1,coords2) {
@@ -128,11 +132,8 @@ var mm = new Vue({
 			};
 
 		//Foursquare API call
-			var call3 = $.ajax({
-				url: "https://api.foursquare.com/v2/venues/explore",
-				type: "GET",
-				dataType: "json",
-				data: {
+			axios.get("https://api.foursquare.com/v2/venues/explore", {
+				params: {
 					ll: centerPtResult,
 					client_id: this.clientId,
 					client_secret: this.clientSecret,
@@ -145,15 +146,15 @@ var mm = new Vue({
 					limit: 6,
 					sortByDistance: 1,
 					format: "json"
-				},
-			});
-
-			$.when(call3).then(function(res3) {
-				var venueResult = res3.response.groups[0].items;
+				}
+			}).then(function(res3) {
+				console.log("Response 3",res3);
+				var venueResult = res3.data.response.groups[0].items;
 				mm.results = venueResult;
 				self.displayVenues();
+			}).catch(function(error) {
+				console.error(error);
 			});
-
 		},
 		//3. build our html to display on the page.
 		displayVenues: function(localVenues) {

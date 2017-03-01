@@ -30,10 +30,12 @@
 	<!-- Map Container -->
 	<div id='map'></div>
 
-	<div class="resultsContainer" v-if="showResults">
+	<div class="resultsContainer" v-if="results.length">
 		<venue-container v-for="result in results" :result="result">
-			<h4>{{ zilch }}</h4>
 		</venue-container>
+	</div>
+	<div class="resultsContainer" v-else>
+			<h4>{{ zilch }}</h4>
 	</div>
 
 	<div class="social-box">
