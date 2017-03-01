@@ -1,15 +1,7 @@
 // Components
-Vue.component('results_card', {
-  template: `
-  	<div class="venueContainer">
-			<img class="venue__image" src="{{ result.venue__image }}">
-			<h2 class="venue__name">{{ result.venue__name }}</h2>
-			<p class="venue__addr">{{ result.venue__addr }}</p>
-			<p class="venue__city">{{ result.venue__city }}</p>
-			<p class="venue__dist"><span>{{ result.venue__dist }}</span> from midpoint.</p>
-			<a class="venue__link" href="{{ result.venue__link }}" target="_blank"><i class="fa fa-foursquare"></i> Visit On Foursquare</a>
-		</div>
-	`
+Vue.component('venue-container', {
+  template: '#venue-template',
+	props: ['result']
 });
 
 var mm = new Vue({
@@ -23,7 +15,9 @@ var mm = new Vue({
 		showModal: false,
 		yourLocation: "154 Sorauren ave. toronto",
 		friendLocation: "99 spadina road toronto",
-		venueType: ""
+		venueType: "",
+		results: [],
+		zilch: "Uh oh.  Looks like your query hasn't returned any results.  Your halfway point is probably in the middle of nowhere :("
 	},
 	methods: {
 		//move user inputs into variables//
@@ -154,54 +148,21 @@ var mm = new Vue({
 			$.when(call3).then(function(res3) {
 				var venueResult = res3.response.groups[0].items;
 				console.log(venueResult);
-				self.displayVenues(venueResult);
+				mm.results = venueResult;
+				self.displayVenues();
 			});
 
 		},
 		//3. build our html to display on the page.
 		displayVenues: function(localVenues) {
-
-			$(".resultsContainer").empty();
-			if (localVenues.length === 0) {
-				  var zilch = $('<h4>').text("Uh oh.  Looks like your query hasn't returned any results.  Your halfway point is probably in the middle of nowhere :(");
-			    $('.resultsContainer').append(zilch);
-			  };
-
-		  // Grab results container, and template from HTML
-			// var resultsContainer = $('.resultsContainer');
-			// var venueTemplate = $('#venue-template').html();
-			
 		  // Setup forEach to loop over each of the results, and 
-			localVenues.forEach(function(venueItem) {
+			this.results.forEach(function(result) {
 				// Shorten object call
-				var v = venueItem.venue;
-
-				// Set variables for each piece of object info
-				var venueName = v.name;
-				var venueAddress = v.location.formattedAddress[0];
-				var venueDistance = v.location.distance;
-				var venueCity = v.location.formattedAddress[1];
-				var venueImage = v.featuredPhotos.items[0].prefix + "300x300" + v.photos.groups[0].items[0].suffix;
-				var venueId = v.id;
-				var venueUrlPrefix = "https://foursquare.com/v/";
-
-				// Set template as variable so we can append it easier later.
-				// var templateItem = $(venueTemplate);
-
-				// Find elements within template, and place in data.
-				// templateItem.find('.venue__image').attr('src', venueImage);
-				// templateItem.find('.venue__name').text(venueName);
-				// templateItem.find('.venue__addr').text(venueAddress);
-				// templateItem.find('.venue__city').text(venueCity);
-				// templateItem.find('.venue__dist span').text(venueDistance + "m");
-				// templateItem.find('.venue__link').attr("href", venueUrlPrefix + venueId);
-
-				// resultsContainer.append(templateItem);
-
-				L.marker([venueItem.venue.location.lat,venueItem.venue.location.lng]).addTo(map).bindPopup(venueName + ":" + "<br>" + venueAddress);
+				var v = result.venue;
+				L.marker([v.location.lat,v.location.lng]).addTo(map).bindPopup(v.name + ":" + "<br>" + venueAddress);
 
 				map.setView([localVenues[0].venue.location.lat,venueItem.venue.location.lng], 15);
-				});
+			});
 
 		},
 		// Hide modal on click

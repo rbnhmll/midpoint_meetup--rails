@@ -30,7 +30,11 @@
 	<!-- Map Container -->
 	<div id='map'></div>
 
-	<div class="resultsContainer hide"></div>
+	<div class="resultsContainer" v-if="results.length">
+		<venue-container v-for="result in results" :result="result">
+			<h4 v-if="results.length == 0">{{ zilch }}</h4>
+		</venue-container>
+	</div>
 
 	<div class="social-box">
 		<a href="https://twitter.com/intent/tweet?original_referer=http%3A%2F%2Flocalhost%3A8000%2F&amp;ref_src=twsrc%5Etfw&amp;text=Find%20a%20mutual%20meet-up%20spot%20for%20you%20%26%20a%20friend%20using%20Midpoint%20Meetup!%20%2F%2F&amp;tw_p=tweetbutton&amp;url=http%3A%2F%2Fmidpointmeetup.com&amp;via=rbnhmll" class="twitter-btn" id="b"><i class="fa fa-twitter"></i><span class="label" id="l">Tweet</span></a>
@@ -50,16 +54,15 @@
 			<h5>Created by <%= link_to "Robin Hamill", "http://robinhamill.ca" %> using the Mapbox &amp; Foursquare APIs</h5>
 		</div> <!-- /.modal -->
 	</div> <!-- /.modal-container -->
-
-	<!-- Template for venue results -->
-	<!-- <script type="text/template" id="venue-template">
-		<div class="venueContainer">
-			<img class="venue__image" src="">
-			<h2 class="venue__name"></h2>
-			<p class="venue__addr"></p>
-			<p class="venue__city"></p>
-			<p class="venue__dist"><span></span> from midpoint.</p>
-			<a class="venue__link" href="" target="_blank"><i class="fa fa-foursquare"></i> Visit On Foursquare</a>
-		</div>
-	</script> -->
 </div> <!-- /#app -->
+
+<template id="venue-template">
+		<div class="venueContainer">
+			<img class="venue__image" :src="result.venue.featuredPhotos.items[0].prefix + '300x300' + result.venue.photos.groups[0].items[0].suffix">
+			<h2 class="venue__name">{{ result.venue.name }}</h2>
+			<p class="venue__addr">{{ result.venue.location.formattedAddress[0] }}</p>
+			<p class="venue__city">{{ result.venue.location.formattedAddress[1] }}</p>
+			<p class="venue__dist"><span>{{ result.venue.location.distance }}m</span> from midpoint.</p>
+			<a class="venue__link" :href="'https://foursquare.com/v/' + result.venue.id" target="_blank"><i class="fa fa-foursquare"></i> Visit On Foursquare</a>
+		</div>
+</template>
