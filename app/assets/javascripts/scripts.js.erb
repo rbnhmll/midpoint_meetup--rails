@@ -7,13 +7,12 @@ Vue.component('venue-container', {
 var mm = new Vue({
 	el: '#app',
 	data: {
-		clientId: "<%= ENV['CLIENT_ID'] %>",
-		// clientSecret: "<%= ENV['CLIENT_SECRET'] %>",
+		clientId: "RUPFMKH0N5PWTIS43LH20C1AWZCMSRJOF02L1Q0PBXEVXIR0",
 		clientSecret: "YRFJZOCG0J3RAJCLGTTAPORHLNBHRNO0X0DSBTBRNA21HMFS",
-		mapBoxKey: "<%= ENV['MAPBOX_KEY'] %>",
+		mapBoxKey: "pk.eyJ1IjoicmJuaG1sbCIsImEiOiI3NjY4ZDk5NjFhMTYyMDMxMWFmMmM5YWEzMzlkMDgwZiJ9.Ep7u1zX_6SFI94jPki9O-w",
 		showModal: false,
-		yourLocation: "154 Sorauren Ave. Toronto",
-		friendLocation: "1 Yonge Street Toronto",
+		yourLocation: "",
+		friendLocation: "",
 		venueType: "",
 		showResults: false,
 		centerPtResult: "",
